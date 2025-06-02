@@ -30,12 +30,7 @@ const VicNavbar: React.FC = () => {
     />
   </Link>
 </div>
-          <div className="flex-shrink-0">
-            <Link href="/" className="font-bold text-xl text-blue-500">
-              Victors Foundation
-            </Link>
-          </div>
-
+         
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-4">
             <Link
