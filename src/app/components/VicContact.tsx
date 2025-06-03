@@ -1,4 +1,6 @@
 // components/ContactUs.tsx
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/app/firebaseConfig"; // Adjust the import path as necessary
 import React, { useState, FormEvent } from 'react';
 import { MapPin, Mail, Phone } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast'; // Import toast and Toaster
@@ -27,10 +29,14 @@ const VicContact: React.FC = () => {
     // Simulate an API call or submission process
     try {
       // In a real application, you would send formData to your backend here
-      // Example: const response = await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
+      //await addDoc(collection(db, "contacts"), {
+    await addDoc(collection(db, "mneti"), {
+      ...formData,
+      createdAt: new Date(),
+    });
       // Example: if (response.ok) { ... } else { throw new Error('Submission failed'); }
 
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate network delay
+       // Simulate network delay
 
       toast.success("Thank you for your message! We'll get back to you soon.", {
         duration: 5000, // Display toast for 5 seconds
