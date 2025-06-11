@@ -1,11 +1,13 @@
 // components/ContactUs.tsx
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "@/app/firebaseConfig"; // Adjust the import path as necessary
-import React, { useState, FormEvent } from 'react';
+"use client"; // This line is necessary for Next.js to treat this file as a client component
+
+import emailjs from '@emailjs/browser';
+import React, { useState, FormEvent,useRef } from 'react';
 import { MapPin, Mail, Phone } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast'; // Import toast and Toaster
 
 const VicContact: React.FC = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -26,47 +28,52 @@ const VicContact: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true); // Disable button during submission
 
-    // Simulate an API call or submission process
-    try {
-      // In a real application, you would send formData to your backend here
-      //await addDoc(collection(db, "contacts"), {
-    await addDoc(collection(db, "mneti"), {
-      ...formData,
-      createdAt: new Date(),
-    });
-      // Example: if (response.ok) { ... } else { throw new Error('Submission failed'); }
+    if (formRef.current) {
+      try {
+        // Send email using Email.js
+        const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '';
+        const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '';
+        const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '';
 
-       // Simulate network delay
+        if (!serviceId || !templateId || !publicKey) {
+          throw new Error("Email.js credentials are not set in environment variables.");
+        }
 
-      toast.success("Thank you for your message! We'll get back to you soon.", {
-        duration: 5000, // Display toast for 5 seconds
-        position: 'top-center', // Position of the toast notification
-      });
+        await emailjs.sendForm(serviceId, templateId, formRef.current, {
+          publicKey: publicKey,
+        });
 
-      // Optionally reset the form
-      setFormData({
-        fullName: '',
-        email: '',
-        subject: '',
-        message: '',
-      });
-    } catch (error) {
-      console.error('Form submission error:', error);
-      toast.error('Failed to send message. Please try again.'); // Error notification
-    } finally {
-      setIsSubmitting(false); // Re-enable button
+        toast.success("Thank you for your message! We'll get back to you soon.", {
+          duration: 5000,
+          position: 'top-center',
+        });
+
+        setFormData({
+          fullName: '',
+          email: '',
+          subject: '',
+          message: '',
+        });
+      } catch (error) {
+        console.error('Form submission error:', error);
+        toast.error('Failed to send message. Please try again.');
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <section id ="contact"  className="py-16 bg-gray-50">
-      <Toaster /> {/* Place the Toaster component here to render notifications */}
+    <section id="contact" className="py-16 bg-gray-50">
+      <Toaster />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Send Us a Message Form */}
           <div className="bg-white p-8 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Send us a message</h2>
-            <form onSubmit={handleSubmit}>
+            <form ref={formRef} onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label htmlFor="fullName" className="block text-gray-700 text-sm font-bold mb-2">
@@ -135,9 +142,9 @@ const VicContact: React.FC = () => {
               <button
                 type="submit"
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-md w-full transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={isSubmitting} // Disable button when submitting
+                disabled={isSubmitting}
               >
-                {isSubmitting ? 'Sending...' : 'Send Message'} {/* Change text while submitting */}
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
