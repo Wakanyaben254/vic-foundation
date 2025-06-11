@@ -180,7 +180,7 @@ const VicContact: React.FC = () => {
             </div>
 
             {/* Operating Hours */}
-            <div className="bg-blue-600 text-white p-8 rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ease-in-out">
+            <div className="bg-blue-600 text-white p-8 rounded-lg shadow-md hover:scale-105 active:scale-105 focus:scale-105 transition-transform duration-300 ease-in-out">
               <h2 className="text-2xl font-bold mb-6">Operating Hours</h2>
               <ul className="space-y-2">
                 <li className="flex justify-between items-center text-lg">
