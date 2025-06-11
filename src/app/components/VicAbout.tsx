@@ -59,7 +59,7 @@ const VicAbout: React.FC = () => {
                 alt="Victor's Foundation community work"
                 width={200}
                 height={200}
-                className="rounded-lg shadow-xl w-full h-auto hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="rounded-lg shadow-xl w-full h-auto hover:scale-105  active:scale-105 focus:scale-105 transition-transform duration-300 ease-in-out"
                 priority
               />
               
