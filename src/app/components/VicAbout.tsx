@@ -55,7 +55,7 @@ const VicAbout: React.FC = () => {
           <div className="order-1 md:order-2 h-full flex items-center">
             <div className="relative w-full h-full min-h-[250px]">
               <Image
-                src="/str.jpg"
+                src="/gyal.jpg"
                 alt="Victor's Foundation community work"
                 width={200}
                 height={200}
