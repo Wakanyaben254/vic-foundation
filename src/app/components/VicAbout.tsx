@@ -37,14 +37,14 @@ const VicAbout: React.FC = () => {
               </div>
               
               <div className="bg-vf-blue-light p-4 rounded-lg text-center">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-orange rounded-full flex items-center justify-center mx-auto mb-3">
                   <Heart className="text-vf-blue" size={24} />
                 </div>
                 <h4 className="font-semibold">Compassion</h4>
               </div>
               
               <div className="bg-vf-orange-light p-4 rounded-lg text-center">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-blue rounded-full flex items-center justify-center mx-auto mb-3">
                   <HandHeart className="text-vf-orange" size={24} />
                 </div>
                 <h4 className="font-semibold">Empowerment</h4>
