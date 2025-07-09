@@ -65,7 +65,7 @@ const WomVic: React.FC = () => {
       <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 text-center lg:text-left">
         {projectDetails.title}
       </h1>
-      <p className="text-green-600 text-lg font-medium mb-8 text-center lg:text-left">{projectDetails.tag}</p>
+      <p className="text-blue-600 text-lg font-medium mb-8 text-center lg:text-left">{projectDetails.tag}</p>
 
       {/* Main image or hero for the project */}
       <div className="relative w-full h-80 md:h-96 rounded-lg overflow-hidden mb-8 shadow-md">
@@ -134,7 +134,7 @@ const WomVic: React.FC = () => {
         <h3 className="text-2xl font-bold text-green-800 mb-4">Support This Project</h3>
         <p className="text-lg text-green-700 mb-6">Beyond charity, a powerful partnership. Collaborate with us  to co-create sustainable economic growth, driven by the ingenuity and resilience of women</p>
         <Link href="/donate" passHref>
-          <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300">
             Donate Now
           </button>
         </Link>
