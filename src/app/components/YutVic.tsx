@@ -34,20 +34,20 @@ const YutVic: React.FC = () => {
           {
             name: "Steve J., Aspiring Entrepreneur",
             quote: "Before this initiative, I had ideas but no clue how to turn them into reality. The mentorship was invaluable; it helped me navigate challenges and showed me that entrepreneurship is truly achievable for young people like me.",
-            image: "/by.jpg" // Placeholder
+            image: "/nrb.jpg" // Placeholder
           },
           {
             name: "Maria C., Program Mentor",
             quote: "It's incredible to see the talent and drive of young people when given the right support. This program is a vital step in helping them contribute to the economy and create jobs for themselves and others.",
-            image: "/man.jpg" // Placeholder
+            image: "/str.jpg" // Placeholder
           },
         ]
       }
     ] as Section[],
     galleryImages: [
-      "/grp.jpg", // Placeholder
-      "/by.jpg", // Placeholder
-      "/man.jpg", // Placeholder
+      "/nrb.jpg", // Placeholder
+      "/str.jpg", // Placeholder
+      "/eng.jpg", // Placeholder
     ]
   };
 

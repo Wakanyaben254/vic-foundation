@@ -34,20 +34,20 @@ const DigiVic: React.FC = () => {
           {
             name: "Amina's Story (Kilifi County)",
             quote: "Learning to use computers has opened up so many opportunities. I can now communicate with my children abroad and even sell my products online.",
-            image: "/slm.jpg" // Placeholder
+            image: "/lap.jpg" // Placeholder
           },
           {
             name: "John's kasongo (Kajiado County)",
             quote: "my children now have access to online educational resources that were previously out of reach. The training on internet navigation and online safety was invaluable.",
-            image: "/smile.jpeg" // Placeholder
+            image: "/sch1.jpg" // Placeholder
           },
         ]
       }
     ] as Section[],
     galleryImages: [
-      "/mas.jpg", // Placeholder
-      "/slm.jpg", // Placeholder
-      "/smile.jpeg", // Placeholder
+      "/lap.jpg", // Placeholder
+      "/sch1.jpg", // Placeholder
+      "/images.jpg", // Placeholder
     ]
   };
 
