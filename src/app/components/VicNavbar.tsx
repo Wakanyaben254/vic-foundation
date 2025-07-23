@@ -1,15 +1,15 @@
 // components/Navbar.tsx
-'use client'; // This directive is crucial for client-side hooks like useState, useEffect, useRef
+'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu } from 'lucide-react'; // Import the 'Menu' (hamburger) icon
-import MobileMenu from './MobileMenu'; // Import the MobileMenu component
+import { Menu } from 'lucide-react';
+import MobileMenu from './MobileMenu';
 
 const VicNavbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null); // Ref for the MobileMenu's outermost div to detect outside clicks
+  const menuRef = useRef<HTMLDivElement>(null); // Ref for the MobileMenu's outermost div
 
   // Function to close the menu
   const closeMenu = () => setIsMenuOpen(false);
@@ -17,22 +17,36 @@ const VicNavbar: React.FC = () => {
   // Effect to handle clicks outside the menu
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // If the menu is open AND the click is NOT inside the menu
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        closeMenu(); // Close the menu
+      // Get a reference to the hamburger button to prevent immediate re-closing
+      const hamburgerButton = document.getElementById('mobile-menu-toggle');
+
+      if (
+        isMenuOpen && // Only run if the menu is actually open
+        menuRef.current && // Ensure the menu DOM element exists
+        !menuRef.current.contains(event.target as Node) && // Click is NOT inside the menu itself
+        (!hamburgerButton || !hamburgerButton.contains(event.target as Node)) // Click is NOT on the hamburger button
+      ) {
+        closeMenu();
       }
     };
 
     // Add event listener when the menu is open
+    // IMPORTANT: When menu is open, we disable body scrolling so only the menu scrolls if needed.
+    // When menu is closed, we re-enable body scrolling.
     if (isMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.body.style.overflow = 'hidden'; // Disable scroll on body
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside); // Ensure it's removed when closed
+      document.body.style.overflow = 'unset'; // Re-enable scroll on body
     }
 
-    // Cleanup: remove event listener when component unmounts or menu closes
+    // Cleanup: remove event listener and reset body overflow when component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.body.style.overflow = 'unset';
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen]); // Re-run effect only when isMenuOpen changes
 
   // Optional: Close menu when screen size changes (e.g., from mobile to desktop view)
   useEffect(() => {
@@ -51,19 +65,12 @@ const VicNavbar: React.FC = () => {
   return (
     <header className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        {/* Logo - visible on all screen sizes */}
+        {/* Logo */}
         <Link href="/">
-          <Image
-            src="/logo.jpg"
-            alt="Victors Foundation Logo"
-            width={150} // Adjust width as needed
-            height={100} // Adjust height as needed
-            priority
-            className="full object-cover"
-          />
+          <Image src="/logo.jpg" alt="Victor Foundation Logo" width={150} height={50} />
         </Link>
 
-        {/* Desktop Navigation - hidden on small screens */}
+        {/* Desktop Navigation */}
         <nav className="hidden lg:flex space-x-8">
           <Link href="/about-us" className="text-gray-700 hover:text-blue-600 font-semibold transition-colors">
             About Us
@@ -77,30 +84,36 @@ const VicNavbar: React.FC = () => {
           <Link href="/contact" className="text-gray-700 hover:text-blue-600 font-semibold transition-colors">
             Contact
           </Link>
-          <Link href="/donate"> {/* Modern Link syntax, no <a> tag child needed */}
+          <Link href="/donate">
             <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-lg shadow-md transition duration-300">
               Donate Now
             </button>
           </Link>
         </nav>
 
-        {/* Mobile Menu Button (hamburger icon from Lucide) - hidden on large screens */}
+        {/* Mobile Menu Button (hamburger icon) */}
         <div className="lg:hidden">
           <button
+            id="mobile-menu-toggle" // ID for the hamburger button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="p-2 text-gray-700 hover:text-gray-900 focus:outline-none"
             aria-label="Toggle navigation menu"
           >
-            <Menu className="w-7 h-7" /> {/* Lucide Menu (hamburger) icon */}
+            <Menu className="w-7 h-7" />
           </button>
         </div>
       </div>
 
+      {/* NO BACKDROP DIV HERE */}
+      {/* The content underneath will now be visible */}
+
       {/* Render the MobileMenu component, passing state and the ref */}
       {isMenuOpen && (
-        <div ref={menuRef}> {/* Attach the ref to this container that holds the MobileMenu */}
-          <MobileMenu isOpen={isMenuOpen} onClose={closeMenu} />
-        </div>
+        <MobileMenu
+          isOpen={isMenuOpen}
+          onClose={closeMenu}
+          menuRef={menuRef} // Pass the ref to MobileMenu
+        />
       )}
     </header>
   );
