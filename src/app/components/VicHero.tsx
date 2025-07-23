@@ -14,7 +14,7 @@ const VicHero: React.FC = () => {
         <div className="lg:pr-8">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4">
             <span className="text-red-500">Empowering</span>{' '}
-            <span className="text-white-500">Communities,</span>{' '}
+            <span className="text-black-500">Communities,</span>{' '}
             <span className="text-blue-600">Transforming Lives</span>
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 mb-8 max-w-xl">
